@@ -57,10 +57,11 @@ class ConcentrationViewController: UIViewController {
             button.isEnabled = true
         }
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
-        theme = halloweenEmojiChoices
+        theme = savedTheme
     }
     
     private func updateViewFromModel() {
+        guard let _ = cardButtons else { return }
         for index in cardButtons.indices {
             let button = cardButtons[index]
             let card = game.cards[index]
@@ -74,9 +75,10 @@ class ConcentrationViewController: UIViewController {
             }
         }
     }
-    
+    var savedTheme: String?
     var theme: String? {
         didSet {
+            savedTheme = theme
             emojiChoices = theme ?? ""
             emoji = [:]
             updateViewFromModel()
